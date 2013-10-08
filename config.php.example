@@ -10,5 +10,6 @@ $config = array(
         'client_id' => 'MY_SURFCONEXT_CLIENT_ID',
         'client_secret' => 'MY_SURFCONEXT_CLIENT_SECRET',
         'token_endpoint' => 'https://api.surfconext.nl/v1/oauth2/token',
-    ),
+        'credentials_in_request_body' => true
+    )
 );
