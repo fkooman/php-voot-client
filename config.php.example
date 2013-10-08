@@ -1,0 +1,14 @@
+<?php
+
+$config = array(
+    'base_uri' => 'http://localhost/php-voot-client/index.php',
+    'scope' => 'read',
+    'api_uri' => 'https://api.surfconext.nl/v1/social/rest/groups/@me',
+    'client' => array(
+        'authorize_endpoint' => 'https://api.surfconext.nl/v1/oauth2/authorize',
+        'redirect_uri' => 'http://localhost/php-voot-client/callback.php',
+        'client_id' => 'MY_SURFCONEXT_CLIENT_ID',
+        'client_secret' => 'MY_SURFCONEXT_CLIENT_SECRET',
+        'token_endpoint' => 'https://api.surfconext.nl/v1/oauth2/token',
+    ),
+);
