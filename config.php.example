@@ -1,6 +1,7 @@
 <?php
 
 $config = array(
+    'log_file' => '/tmp/php-voot-client.log',
     'base_uri' => 'http://localhost/php-voot-client/index.php',
     'scope' => 'read',
     'api_uri' => 'https://api.surfconext.nl/v1/social/rest/groups/@me',

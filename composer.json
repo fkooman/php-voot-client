@@ -2,6 +2,7 @@
     "name": "fkooman/php-voot-client",
     "require": {
         "fkooman/guzzle-bearer-auth-plugin": "dev-master",
-        "fkooman/php-oauth-client": "0.3.*"
+        "fkooman/php-oauth-client": "0.3.*",
+        "monolog/monolog": "1.6.*"
     }
 }

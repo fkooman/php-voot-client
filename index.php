@@ -12,12 +12,25 @@ use fkooman\OAuth\Client\Scope;
 use fkooman\Guzzle\Plugin\BearerAuth\BearerAuth;
 use fkooman\Guzzle\Plugin\BearerAuth\Exception\BearerErrorResponseException;
 
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+
+use Guzzle\Plugin\Log\LogPlugin;
+use Guzzle\Log\PsrLogAdapter;
+use Guzzle\Log\MessageFormatter;
 use Guzzle\Http\Client;
 
 $clientConfig = new ClientConfig($config['client']);
 
 $tokenStorage = new SessionStorage();
+
+$log = new Logger('php-voot-client');
+$log->pushHandler(new StreamHandler($config['log_file'], Logger::DEBUG));
+$logPlugin = new LogPlugin(new PsrLogAdapter($log), MessageFormatter::DEBUG_FORMAT);
+
 $httpClient = new Client();
+$httpClient->addSubscriber($logPlugin);
+
 $api = new Api("php-voot-client", $clientConfig, $tokenStorage, $httpClient);
 
 $context = new Context(
@@ -35,6 +48,7 @@ if (false === $accessToken) {
 
 try {
     $client = new Client();
+    $client->addSubscriber($logPlugin);
     $bearerAuth = new BearerAuth($accessToken->getAccessToken());
     $client->addSubscriber($bearerAuth);
     $response = $client->get($config['api_uri'])->send();

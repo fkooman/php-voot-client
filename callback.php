@@ -8,13 +8,25 @@ use fkooman\OAuth\Client\SessionStorage;
 use fkooman\OAuth\Client\Callback;
 use fkooman\OAuth\Client\AuthorizeException;
 
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+
+use Guzzle\Plugin\Log\LogPlugin;
+use Guzzle\Log\PsrLogAdapter;
+use Guzzle\Log\MessageFormatter;
 use Guzzle\Http\Client;
 
 $clientConfig = new ClientConfig($config['client']);
 
 try {
     $tokenStorage = new SessionStorage();
+
+    $log = new Logger('php-voot-client');
+    $log->pushHandler(new StreamHandler($config['log_file'], Logger::DEBUG));
+    $logPlugin = new LogPlugin(new PsrLogAdapter($log), MessageFormatter::DEBUG_FORMAT);
     $httpClient = new Client();
+    $httpClient->addSubscriber($logPlugin);
+
     $cb = new Callback("php-voot-client", $clientConfig, $tokenStorage, $httpClient);
     $cb->handleCallback($_GET);
 
